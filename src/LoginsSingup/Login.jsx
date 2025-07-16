@@ -1,70 +1,65 @@
-import React, { useState } from 'react'
-import Navbar from './Navbar'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [msg, setMsg] = useState("");
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
 
-    const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-    const handleInput = (event) =>{
-        const value = event.target.value;
-        const name = event.target.name;
-        if("email" == name){
-            setEmail(value)
-        }
-        if("password" == name){
-            setPassword(value)
-        }
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add validation and submission logic here
+    console.log('Form submitted:', formData);
+  };
 
-    const handleSubmit = (event) =>{
-        event.preventDefault();
-
-        if(email == "" || password == ""){
-            alert("Please Enter Details!")
-        }else{
-            let getDetials = JSON.parse(localStorage.getItem("user"))
-          console.log(getDetials);
-        getDetials.map((curValue)=>{
-            console.log(curValue.password);
-            let storeEmail = curValue.email;
-            let storePassword = curValue.password;
-
-            if(storeEmail == email && storePassword == password){
-                alert("Login Successfully !")
-                navigate("/home")
-
-            }else{
-                return setMsg("Invalid Email or Password!")
-            }
-            
-        })
-        }
-        
-        
-    }
   return (
-    <div>
-    <Navbar/>
-        <div >
-        <p className='errMsg'>{msg}</p>
-        <form onSubmit={handleSubmit} className='login-form'>
-                <div className='heading'>
-                    <p>Log In</p>
-                </div>
-                <div className='account'>
-                 <input type='text' name='email' placeholder='Enter your Email' onChange={handleInput}/>
-                 <input type='password' name='password' placeholder='Enter your Password' onChange={handleInput}/>
-                 <p>If you have to create account ? <a href=''>Signup</a></p>
-                </div>
-                <button>Log In</button>
-            </form>
-        </div>
+    <div className="auth-container">
+      <div className="form-card">
+        <h1 className="form-heading">Welcome Back</h1>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-input"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form-input"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="submit-btn">Log In</button>
+          <div className="form-footer">
+            Don't have an account? <Link to="/">Sign up</Link>
+          </div>
+        </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

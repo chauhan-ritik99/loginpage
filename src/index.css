@@ -36,6 +36,19 @@ form button {
   border: none;
   margin-top: 22px;
 }
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 form .heading {
   font-size: 30px;
   font-weight: 600;
@@ -153,4 +166,18 @@ img {
     height: 30px;
     font-size: 15px;
   }
+}
+
+.btn{
+  border-radius: 10px;
+  margin-left: 30px;
+}
+.btn1{
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.btn2{
+  border-radius: 10px;
+  height:45px;
 }

@@ -1,78 +1,78 @@
-import React, { useState } from 'react'
-import main from '../assets/image/loginimg.jpg'
-import Navbar from './Navbar'
-import { useNavigate } from 'react-router'
-const Singup = () => {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-  const userdetail={
-    name:"",
-    email:"",
-    password:"",
-  }
-  const [data,setData]=useState(userdetail)
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
 
-  const navigate=useNavigate()
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-  const handelinput=(event)=>{
-    // console.log(event.target.value);
-    // console.log(event.target.name);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add validation and submission logic here
+    console.log('Form submitted:', formData);
+  };
 
-    const name=event.target.name
-    const value=event.target.value
-
-    setData({...data, [name]:value})
-    
-  }
-    const handleSubmit=(event)=>{
-      event.preventDefault()
-      if(data.name=="" || data.email==""|| data.password==""){
-       alert("enter fill detalis")
-      }
-
-      else{
-
-      const getdata = JSON.parse(localStorage.getItem("user")||"[]")
-      let arr=[]
-      arr=[...getdata]
-      arr.push(data)
-       localStorage.setItem("user",JSON.stringify(arr))
-
-       alert("Singup Successfully")
-
-       navigate("/login")
-
-
-      }
-
-
-    }
-
-    return (
-    <>
-      <Navbar/>
-    
-    <div className='main-page'>
+  return (
+    <div className="auth-container">
+      <div className="form-card">
+        <h1 className="form-heading">Create Account</h1>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
-            <div className='heading'>
-                <p>Sing-up</p>
-            </div>
-            <div className='account'>
-                <input type='text' name='name' placeholder='enter the name' onChange={handelinput}/>
-                  <input type='email' name='email' placeholder='enter the email'  onChange={handelinput}/>
-                    <input type='password' name='password' placeholder='enter the password'  onChange={handelinput}/>
-
-                 <p>Allready have an account - <a href='/login'>Login</a></p>
-            </div>
-            <button>Sing-up</button>
+          <div className="form-group">
+            <label htmlFor="username" className="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="form-input"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-input"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form-input"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="submit-btn">Sign Up</button>
+          <div className="form-footer">
+            Already have an account? <Link to="/login">Log in</Link>
+          </div>
         </form>
-           
-         <div>
-            
-            <img src={main} alt='' />
-        </div>
+      </div>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default Singup
+export default Signup;
