@@ -97,12 +97,13 @@ img {
   font-size: 18px;
   cursor: pointer;
   border-radius: 10px;
+  margin: 0px;
 }
 .login-form {
   margin: auto;
 }
 
-/* ------------ Responsive Design 317px तक -------------- */
+
 
 @media (max-width: 317px) {
   
